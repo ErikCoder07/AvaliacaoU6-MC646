@@ -8,13 +8,15 @@ class RecentFilesTests {
 	@Test
 	void testeAdicionarArquivo() {
 		
-		Arquivo arquivoAberto = new Arquivo(nome);
+		Arquivo arquivoAberto = new Arquivo("nome");
 		
 		RecentFileList listaArquivos = new RecentFileList();
 	
 		listaArquivos.addArchive(arquivoAberto);
 	
-		assertEquals(arquivoAberto.getName.tostring(), listaArquivos.getfirstItem().getName.tostring());
+		assertEquals(arquivoAberto.getName(), listaArquivos.getfirstItem().getName());
+		
+		assertEquals(arquivoAberto,listaArquivos.getfirstItem());
 	}
 	
 }
