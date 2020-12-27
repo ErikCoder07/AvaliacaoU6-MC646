@@ -58,4 +58,16 @@ public class RecentFileList {
 		return arquivosRecentes[posicao];
 	}
 
+	public void limpaLista() {
+		arquivosRecentes[0] = null;
+	}
+
+	public void travaLista() {
+		
+	}
+
+	public int getTamLista() {
+		return 5;
+	}
+
 }

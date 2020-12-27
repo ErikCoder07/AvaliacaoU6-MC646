@@ -97,9 +97,9 @@ class RecentFilesTests {
 		arquivoAberto = new Arquivo("nome" + 50);
 		listaArquivos.addArchive(arquivoAberto);
 		
-		assertEquals("nome4", listaArquivos.getfirstItem().getName());
+		assertEquals("nome50", listaArquivos.getfirstItem().getName());
 		
-		assertEquals(4, listaArquivos.getTamLista());
+		assertEquals(5, listaArquivos.getTamLista());
 		
 	}
 	
