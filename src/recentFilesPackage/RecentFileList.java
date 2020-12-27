@@ -6,48 +6,52 @@ public class RecentFileList {
 	
 	private int tamanho = 0;
 	
+	private boolean trava = false;
+	
 	public void addArchive(Arquivo arquivoAberto) {
-			
-		Arquivo[] arquivosTemp = new Arquivo[15];
-		int tempTam = 0;
 		
-		//Adiciona o arquivo aberto na primeira posicao do array temporario
-		arquivosTemp[0] = arquivoAberto;
-		tempTam++;
-		
-		//percorre a lista de arquivos abertos recentemente
-		for (int i = 0; i < tamanho; i++){
+		if(!trava) {
+			Arquivo[] arquivosTemp = new Arquivo[15];
+			int tempTam = 0;
 			
-			//Se o novo item ja estava na lista então ignora
-			if(arquivoAberto.getName().equals(arquivosRecentes[i].getName())){
-				continue;
+			//Adiciona o arquivo aberto na primeira posicao do array temporario
+			arquivosTemp[0] = arquivoAberto;
+			tempTam++;
+			
+			//percorre a lista de arquivos abertos recentemente
+			for (int i = 0; i < tamanho; i++){
+				
+				//Se o novo item ja estava na lista então ignora
+				if(arquivoAberto.getName().equals(arquivosRecentes[i].getName())){
+					continue;
+				}
+				/* 	
+				 	Se a lista temporaria esta cheia então quebra a execucao do for.
+					Caso a lista de arquivos abertos recentemente estiver cheia e o
+					arquivo aberto nao estiver nela, entao o ultimo arquivo sera 
+					descartado.
+				*/
+				else if(tempTam == 15) {
+					break;
+				}
+				
+				
+				//adiciona elementos de arquivos recentes no temporario
+				else {
+					arquivosTemp[tempTam] = arquivosRecentes[i];
+					tempTam++;
+				}
 			}
-			/* 	
-			 	Se a lista temporaria esta cheia então quebra a execucao do for.
-				Caso a lista de arquivos abertos recentemente estiver cheia e o
-				arquivo aberto nao estiver nela, entao o ultimo arquivo sera 
-				descartado.
-			*/
-			else if(tempTam == 15) {
-				break;
+			/*
+				Agora o temporario tem o arquivo aberto no topo da lista e todos os 
+				elementos validos de arquivos recentes foram adicionados depois
+			*/ 
+			for (int i = 0; i < tempTam; i++) {
+				arquivosRecentes[i] = arquivosTemp[i];
 			}
 			
-			
-			//adiciona elementos de arquivos recentes no temporario
-			else {
-				arquivosTemp[tempTam] = arquivosRecentes[i];
-				tempTam++;
-			}
+			tamanho = tempTam;
 		}
-		/*
-			Agora o temporario tem o arquivo aberto no topo da lista e todos os 
-			elementos validos de arquivos recentes foram adicionados depois
-		*/ 
-		for (int i = 0; i < tempTam; i++) {
-			arquivosRecentes[i] = arquivosTemp[i];
-		}
-		
-		tamanho = tempTam;
 	}
 
 	public Arquivo getfirstItem() {
@@ -59,15 +63,22 @@ public class RecentFileList {
 	}
 
 	public void limpaLista() {
-		arquivosRecentes[0] = null;
+		for (int i = 0; i < tamanho; i++) {
+			arquivosRecentes[i] = null;
+		}
+		tamanho = 0;
 	}
 
 	public void travaLista() {
-		
+		trava = true;
+	}
+	
+	public void destravaLista() {
+		trava = false;
 	}
 
 	public int getTamLista() {
-		return 5;
+		return tamanho;
 	}
 
 }
