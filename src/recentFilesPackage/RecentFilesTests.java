@@ -60,4 +60,47 @@ class RecentFilesTests {
 		
 	}
 	
+	@Test
+	void testeLimpaLista() {
+		
+		RecentFileList listaArquivos = new RecentFileList();
+		Arquivo arquivoAberto;
+		
+		for (int i = 0; i < 15; i++) {
+			arquivoAberto = new Arquivo("nome" + i);
+			listaArquivos.addArchive(arquivoAberto);
+		}
+		
+		assertEquals("nome14", listaArquivos.getfirstItem().getName());
+		
+		listaArquivos.limpaLista();
+		
+		assertEquals(null, listaArquivos.getfirstItem());
+		
+	}
+	
+	@Test
+	void testeTravaLista() {
+		
+		RecentFileList listaArquivos = new RecentFileList();
+		Arquivo arquivoAberto;
+		
+		for (int i = 0; i < 5; i++) {
+			arquivoAberto = new Arquivo("nome" + i);
+			listaArquivos.addArchive(arquivoAberto);
+		}
+		
+		assertEquals("nome4", listaArquivos.getfirstItem().getName());
+		
+		listaArquivos.travaLista();
+		
+		arquivoAberto = new Arquivo("nome" + 50);
+		listaArquivos.addArchive(arquivoAberto);
+		
+		assertEquals("nome4", listaArquivos.getfirstItem().getName());
+		
+		assertEquals(4, listaArquivos.getTamLista());
+		
+	}
+	
 }
